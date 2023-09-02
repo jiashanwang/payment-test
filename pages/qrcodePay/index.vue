@@ -161,11 +161,12 @@
 		}
 	}
 	.showOrHide{
+		margin-top:50rpx;
 		border-top:1rpx dashed #cccccc;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom:20rpx;
+		margin-bottom:40rpx;
 		.img{
 			margin-top:30rpx;
 			width:60rpx;
