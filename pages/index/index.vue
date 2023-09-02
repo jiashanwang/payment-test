@@ -91,7 +91,8 @@
 				        outOrderNo:this.orderNo,
 						amount:this.amount,
 						notify_url:"https://www.xuezhangstore.com",
-						payType:this.payType
+						payType:this.payType,
+						goodsName:this.goodsName
 				    },
 					method:"POST",
 				    header: {
@@ -109,8 +110,10 @@
 							let params = {
 								outOrderNo:this.orderNo,
 								amount:this.amount,
-								url
+								url,
+								goodsName:this.goodsName
 							}
+							debugger;
 							let queryData = encodeURIComponent(JSON.stringify(params))
 							uni.navigateTo({
 								url: "/pages/qrcodePay/index?data=" + queryData

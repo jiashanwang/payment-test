@@ -19,6 +19,35 @@
 			<button size="mini" type="primary">保存相册</button>
 				<button size="mini" type="primary">复制链接</button>
 		</view>
+		<view class="goods" v-if="!isShow">
+			<view class="goods-item goods-name">
+				<p>购买商品名称</p>
+				<p>{{data.goodsName}}</p>
+			</view>
+			<view class="goods-item goods-name">
+				<p>商户订单号</p>
+				<p>{{data.outOrderNo}}</p>
+			</view>
+			<view class="goods-item goods-name">
+				<p>订单创建时间</p>
+				<p>2023-09-02 12:12:12</p>
+			</view>
+		</view>
+		<view class="showOrHide">
+			<image class="img" @click="showOrHideEvent" v-show="!isShow" src="/static/top.png"></image>
+			<image class="img" @click="showOrHideEvent" v-show="isShow" src="/static/bottom.png"></image>
+		</view>
+		<view class="saoyisao">
+			<image class="img" src="/static/saoyisao.png"></image>
+			<view class="saomadesc">
+				请使用微信扫一扫<br>
+				扫描二维码完成付款
+			</view>
+		</view>
+		<view class="remark">
+			<p class="desc">手机用户可保存上方二维码到手机中</p>
+			<p class="desc">在微信扫一扫中选择“相册”即可</p>
+		</view>
 	</view>
 </template>
 
@@ -27,7 +56,8 @@
 	export default {
 		data() {
 			return {
-				data:{}
+				data:{},
+				isShow:true
 			};
 		},
 		onReady() {
@@ -35,10 +65,14 @@
 		},
 		onLoad(options){
 			if (options.data){
+				console.log("options.data = ",JSON.parse(decodeURIComponent(options.data)))
 				this.data = JSON.parse(decodeURIComponent(options.data));
 			};
 		},
 		methods:{
+			showOrHideEvent(){
+				this.isShow = !this.isShow;
+			},
 			// 获取支付二维码
 			getQrcodeImg(url){
 				var qr = new UQRCode();
@@ -82,6 +116,7 @@
 		color:#ff0000;
 		margin:40rpx auto;
 		text-align:center;
+		font-size:26rpx;
 	}
 	.amount{
 		margin-bottom:50rpx;
@@ -106,10 +141,72 @@
 		border:1rpx dashed #06ae56;
 		padding:30rpx;
 		color:#ff0000;
+		font-size:26rpx;
 	}
 	.operate{
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		margin-bottom:30rpx;
+	}
+	.goods{
+		margin-top:40rpx;
+		padding:30rpx;
+		.goods-item{
+			font-size:26rpx;
+			margin:20rpx 0;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+	.showOrHide{
+		border-top:1rpx dashed #cccccc;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom:20rpx;
+		.img{
+			margin-top:30rpx;
+			width:60rpx;
+			height: 60rpx;
+			cursor: pointer;
+		}
+	}
+	// .fade-enter-active,
+	// .fade-leave-active {
+	//   transition: opacity .5s ease;
+	// }
+	
+	// .fade-enter,
+	// .fade-leave-to {
+	//   transition: 0 .5s ease;
+	// }
+	.saoyisao{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.img{
+			width:100rpx;
+			height:100rpx;
+			margin-right:30rpx;
+		}
+		.saomadesc{
+			line-height: 55rpx;
+			font-size:28rpx;
+		}
+	}
+	.remark{
+		margin-top:30rpx;
+		padding:30rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background-color: #f7f7f7;
+		font-size:26rpx;
+		.desc{
+			margin:10rpx;
+		}
 	}
 </style>
