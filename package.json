@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "uniapp-qrcode": "^1.0.2",
+    "uqrcodejs": "^4.0.7"
+  }
+}
