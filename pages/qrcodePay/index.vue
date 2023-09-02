@@ -57,7 +57,7 @@
 		data() {
 			return {
 				data:{},
-				isShow:true
+				isShow:true,
 			};
 		},
 		onReady() {
