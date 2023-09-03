@@ -16,8 +16,8 @@
 			操作流程：复制链接→打开微信搜索自己微信名→打开聊天对话框→粘贴链接→发送→点击发送出来的蓝色链接→进入付款页面→完成付款
 		</view>
 		<view class="operate">
-			<button size="mini" type="primary">保存相册</button>
-				<button size="mini" type="primary">复制链接</button>
+			<!-- <button size="mini" type="primary">保存相册</button> -->
+			<button size="mini" type="primary" @click="copyLink">复制链接</button>
 		</view>
 		<view class="goods" v-if="!isShow">
 			<view class="goods-item goods-name">
@@ -56,28 +56,57 @@
 	export default {
 		data() {
 			return {
-				data:{},
-				isShow:true,
+				data: {},
+				isShow: true,
 			};
 		},
 		onReady() {
 			this.getQrcodeImg(this.data.url)
 		},
-		onLoad(options){
-			if (options.data){
-				console.log("options.data = ",JSON.parse(decodeURIComponent(options.data)))
+		onLoad(options) {
+			if (options.data) {
+				console.log("options.data = ", JSON.parse(decodeURIComponent(options.data)))
 				this.data = JSON.parse(decodeURIComponent(options.data));
 			};
 		},
-		methods:{
-			showOrHideEvent(){
+		methods: {
+			setClipboardData(data) {
+				return new Promise((success, fail) => {
+					const textarea = document.createElement('textarea');
+					textarea.value = data
+					textarea.readOnly = true
+					document.body.appendChild(textarea)
+					textarea.select()
+					textarea.setSelectionRange(0, data.length)
+					document.execCommand('copy')
+					textarea.remove()
+					success(data)
+				})
+			},
+			copyLink() {
+				let content = this.data.url
+				this.setClipboardData(content).then((res) => {
+					if (res == '') {
+						uni.showToast({
+							title: '复制失败！',
+							icon: 'none'
+						})
+					} else {
+						uni.showToast({
+							title: '复制成功!',
+							icon: 'none'
+						})
+					}
+				})
+			},
+			showOrHideEvent() {
 				this.isShow = !this.isShow;
 			},
 			// 获取支付二维码
-			getQrcodeImg(url){
+			getQrcodeImg(url) {
 				var qr = new UQRCode();
 				// 设置二维码内容
-				qr.data = "https://uqrcode.cn/doc";
+				qr.data = url;
 				// 设置二维码大小，必须与canvas设置的宽高一致
 				qr.size = 200;
 				// 调用制作二维码方法
@@ -94,120 +123,138 @@
 </script>
 
 <style lang="scss">
-	.title-content{
-		padding-top:60rpx;
+	.title-content {
+		padding-top: 60rpx;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
-		.logo{
-			width:50rpx;
+
+		.logo {
+			width: 50rpx;
 			height: 50rpx;
-			margin-right:20rpx;
+			margin-right: 20rpx;
 			border-radius: 50%;
 		}
 	}
-	.line-operate{
-		margin-top:30rpx;
+
+	.line-operate {
+		margin-top: 30rpx;
 		height: 40rpx;
 		background-color: #f7f7f7;
 	}
-	.mobile-tips{
-		color:#ff0000;
-		margin:40rpx auto;
-		text-align:center;
-		font-size:26rpx;
+
+	.mobile-tips {
+		color: #ff0000;
+		margin: 40rpx auto;
+		text-align: center;
+		font-size: 26rpx;
 	}
-	.amount{
-		margin-bottom:50rpx;
+
+	.amount {
+		margin-bottom: 50rpx;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-size:60rpx;
-		.icon{
-			margin-right:10rpx;
+		font-size: 60rpx;
+
+		.icon {
+			margin-right: 10rpx;
 		}
-		.price{
-			font-size:50rpx;
+
+		.price {
+			font-size: 50rpx;
 		}
 	}
-	.qrcode{
+
+	.qrcode {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	.wxpayDesc{
-		margin:50rpx 20rpx;
-		border:1rpx dashed #06ae56;
-		padding:30rpx;
-		color:#ff0000;
-		font-size:26rpx;
+
+	.wxpayDesc {
+		margin: 50rpx 20rpx;
+		border: 1rpx dashed #06ae56;
+		padding: 30rpx;
+		color: #ff0000;
+		font-size: 26rpx;
 	}
-	.operate{
+
+	.operate {
 		display: flex;
-		justify-content: space-around;
+		// justify-content: space-around;
+		justify-content: center;
 		align-items: center;
-		margin-bottom:30rpx;
+		margin-bottom: 30rpx;
 	}
-	.goods{
-		margin-top:40rpx;
-		padding:30rpx;
-		.goods-item{
-			font-size:26rpx;
-			margin:20rpx 0;
+
+	.goods {
+		margin-top: 40rpx;
+		padding: 30rpx;
+
+		.goods-item {
+			font-size: 26rpx;
+			margin: 20rpx 0;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 		}
 	}
-	.showOrHide{
-		margin-top:50rpx;
-		border-top:1rpx dashed #cccccc;
+
+	.showOrHide {
+		margin-top: 50rpx;
+		border-top: 1rpx dashed #cccccc;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom:40rpx;
-		.img{
-			margin-top:30rpx;
-			width:60rpx;
+		margin-bottom: 40rpx;
+
+		.img {
+			margin-top: 30rpx;
+			width: 60rpx;
 			height: 60rpx;
 			cursor: pointer;
 		}
 	}
+
 	// .fade-enter-active,
 	// .fade-leave-active {
 	//   transition: opacity .5s ease;
 	// }
-	
+
 	// .fade-enter,
 	// .fade-leave-to {
 	//   transition: 0 .5s ease;
 	// }
-	.saoyisao{
+	.saoyisao {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		.img{
-			width:100rpx;
-			height:100rpx;
-			margin-right:30rpx;
+
+		.img {
+			width: 100rpx;
+			height: 100rpx;
+			margin-right: 30rpx;
 		}
-		.saomadesc{
+
+		.saomadesc {
 			line-height: 55rpx;
-			font-size:28rpx;
+			font-size: 28rpx;
 		}
 	}
-	.remark{
-		margin-top:30rpx;
-		padding:30rpx;
+
+	.remark {
+		margin-top: 30rpx;
+		padding: 30rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		background-color: #f7f7f7;
-		font-size:26rpx;
-		.desc{
-			margin:10rpx;
+		font-size: 26rpx;
+
+		.desc {
+			margin: 10rpx;
 		}
 	}
 </style>
