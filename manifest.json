@@ -73,7 +73,7 @@
         "title" : "财易付 - 支付测试",
         "router" : {
             "mode" : "history",
-            "base" : "/payment/"
+            "base" : "/testpay/"
         }
     }
 }
