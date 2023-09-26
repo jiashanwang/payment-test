@@ -63,25 +63,26 @@
 				orderNo: "",
 				goodsName: "支付测试",
 				amount: 1,
-				payType: 2, // 支付交互形式：1. 拉起H5支付 2. 生成二维码支付（NATIVE支付） 3. 拉起小程序支付 4. 拉起公众号支付 5. APP支付
-				payTypeList: [{
-						value: 1,
+				payType: "2", // 支付交互形式：1. 拉起H5支付 2. 生成二维码支付（NATIVE支付） 3. 拉起小程序支付 4. 拉起公众号支付 5. APP支付
+				payTypeList: [
+					{
+						value: "1",
 						name: 'H5',
 						disabled: true,
 					},
 					{
-						value: 2,
-						name: '二维码',
+						value: "2",
+						name: '原生支付',
 						checked: 'true',
 						disabled: false,
 					},
 					{
-						value: 3,
+						value: "3",
 						name: '小程序',
 						disabled: false,
 					},
 					{
-						value: 4,
+						value: "4",
 						name: '公众号',
 						disabled: true,
 					},
@@ -91,19 +92,49 @@
 		},
 		onLoad() {
 			this.orderNo = this.randomNumber();
+			let query = this.$route.query;
+			if (!query.appid || !query.appsecret){
+				this.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImFwcF9pZCI6InRka2dzY2w0bnp3YTk1bSIsImFwcF9zZWNyZXQiOiI2MGQ0NWNkYjhjMTgyYjU2Nzg0N2QwMGRiNzc3NWY0ZCJ9fQ.GKUB_T-hhivCVi3w1P_V6aSpQ5sl4DRcqzyn9qByVno";
+			}else {
+				this.getToken(query.appid,query.appsecret);
+			}
+			
 		},
 		methods: {
 			radioChange(event) {
 				this.payType = event.detail.value;
-				for (let i = 0; i < this.items.length; i++) {
-					if (this.items[i].value === event.detail.value) {
-						this.current = i;
+				for (let i = 0; i < this.payTypeList.length; i++) {
+					if (this.payTypeList[i].value == event.detail.value) {
+						this.current = event.detail.value;
 						break;
 					}
 				}
 			},
 			changeAmount(event) {
 				this.amount = Number(event.target.value.match(/^\d*(\.?\d{0,2})/g)[0]);
+			},
+			getToken(appid,appsecret){
+				uni.request({
+					url: 'https://www.atwillpay.cn/payment/common/getToken',
+					// url: "http://10.32.203.162:4000/payment/common/getToken",
+					data: {
+						app_id: appid,
+						app_secret:appsecret,
+					},
+					method: "POST",
+					success: (res) => {
+						let result = res.data;
+						if (result.code == 0) {
+							// 成功
+							this.token = result.data;
+						} else {
+							uni.showToast({
+								title: "token获取失败",
+								icon: 'none'
+							})
+						}
+					}
+				});
 			},
 			randomNumber() {
 				const now = new Date()
@@ -122,39 +153,50 @@
 				return orderCode;
 			},
 			payClick() {
+				let token = this.token;
 				uni.request({
 					url: 'https://www.atwillpay.cn/payment/main/createOrder',
 					// url: "http://10.32.203.162:4000/payment/main/createOrder",
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "https://www.xuezhangstore.com",
+						notify_url: "https://www.atwillpay.com",
 						payType: this.payType,
 					},
 					method: "POST",
 					header: {
-						'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiJ0ZDMxbGl4ZW16ajZxb2IiLCJhcHBfc2VjcmV0IjoiODI5YTA5ODhiNWQ4ZDc0MjBlNmQ1NGRmN2MzZmNlNTgifQ.EiXMN1XdqXdQnsJRKhQwQSL0ZeAlNfn6NQ5XBl40zlg' //自定义请求头信息
+						'Authorization': 'Bearer ' + this.token
 					},
 					success: (res) => {
 						let result = res.data;
 						if (result.code == 0) {
 							// 成功
-							if (this.payType == 1) {
+							if (this.payType == "1") {
 
-							} else if (this.payType == 2) {
+							} else if (this.payType == "2") {
 								//跳转到二维码支付页面
-								let url = result.data;
-								let params = {
-									outOrderNo: this.orderNo,
-									amount: this.amount,
-									url,
-									goodsName: this.goodsName
+								if (result.data.code == 200){
+									// 获取成功
+									let urlData = JSON.parse(result.data.message);
+									let url = urlData.code_url;
+									let params = {
+										outOrderNo: this.orderNo,
+										amount: this.amount,
+										url,
+										goodsName: this.goodsName
+									}
+									let queryData = encodeURIComponent(JSON.stringify(params))
+									uni.navigateTo({
+										url: "/pages/qrcodePay/index?data=" + queryData
+									});
+								}else{
+									uni.showToast({
+										title: "原生支付通道获取失败",
+										icon: 'none'
+									})
 								}
-								let queryData = encodeURIComponent(JSON.stringify(params))
-								uni.navigateTo({
-									url: "/pages/qrcodePay/index?data=" + queryData
-								});
-							} else if (this.payType == 3) {
+					
+							} else if (this.payType == "3") {
 								let url = result.data;
 								window.open(url)
 							}
