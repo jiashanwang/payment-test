@@ -155,8 +155,8 @@
 			payClick() {
 				let token = this.token;
 				uni.request({
-					// url: 'https://www.atwillpay.cn/payment/main/createOrder',
-					url: "http://10.32.203.162:4000/payment/main/createOrder",
+					url: 'https://www.atwillpay.cn/payment/main/createOrder',
+					// url: "http://10.32.203.162:4000/payment/main/createOrder",
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
@@ -175,10 +175,9 @@
 
 							} else if (this.payType == "2") {
 								//跳转到二维码支付页面
-								if (result.data.code == 200){
+								if (result.code == 0){
 									// 获取成功
-									let urlData = JSON.parse(result.data.message);
-									let url = urlData.code_url;
+									let url = result.data.url_link;
 									let params = {
 										outOrderNo: this.orderNo,
 										amount: this.amount,
@@ -197,8 +196,15 @@
 								}
 					
 							} else if (this.payType == "3") {
-								let url = result.data;
-								window.open(url)
+								if (result.code == 0){
+									let url = result.data.url_link;
+									window.open(url)
+								}else {
+									uni.showToast({
+										title: "小程序支付通道获取失败",
+										icon: 'none'
+									})
+								}
 							}
 						} else {
 							uni.showToast({
