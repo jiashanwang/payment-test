@@ -175,9 +175,10 @@
 
 							} else if (this.payType == "2") {
 								//跳转到二维码支付页面
-								if (result.code == 0){
+								if (result.data.code == 200){
 									// 获取成功
-									let url = result.data.url_link;
+									let urlData = JSON.parse(result.data.message);
+									let url = urlData.code_url;
 									let params = {
 										outOrderNo: this.orderNo,
 										amount: this.amount,
