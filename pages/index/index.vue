@@ -156,12 +156,10 @@
 				let token = this.token;
 				uni.request({
 					url: 'https://www.atwillpay.cn/payment/main/createOrder',
-					// url: "http://10.32.203.162:4000/payment/main/createOrder",
-					// url: "http://192.168.10.102:4000/payment/main/createOrder",
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "https://www.atwillpay.com",
+						notify_url: "https://www.atwillpay.com/payment/common/notifyToApp",// 测试回调通知
 						payType: this.payType,
 					},
 					method: "POST",
