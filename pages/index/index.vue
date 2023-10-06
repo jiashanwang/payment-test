@@ -31,7 +31,7 @@
 					<input class="input" v-model="amount" @blur="changeAmount" type="digit" placeholder="请输入支付金额" />
 				</view>
 			</view>
-			<view class="item pay-list">
+		<!-- 	<view class="item pay-list">
 				<view class="pay-type-name">支付形式:</view>
 				<radio-group @change="radioChange" class="payTypeListBox">
 					<label v-for="(item, index) in payTypeList" :key="item.value" class="payTypeList">
@@ -41,7 +41,7 @@
 						<view class="pay-item">{{item.name}}</view>
 					</label>
 				</radio-group>
-			</view>
+			</view> -->
 			<view class="item payment" @tap="payClick">
 				<image class="wxlogo" src="/static/wxpay.png"></image>
 				<text>微信支付</text>
@@ -155,8 +155,9 @@
 			payClick() {
 				let token = this.token;
 				uni.request({
-					url: 'https://www.atwillpay.cn/payment/main/createOrder',
+					// url: 'https://www.atwillpay.cn/payment/main/createOrder',
 					// url: "http://10.32.203.162:4000/payment/main/createOrder",
+					url: "http://192.168.10.102:4000/payment/main/createOrder",
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
@@ -169,6 +170,7 @@
 					},
 					success: (res) => {
 						let result = res.data;
+						debugger;
 						if (result.code == 0) {
 							// 成功
 							if (this.payType == "1") {
