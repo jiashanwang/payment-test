@@ -31,6 +31,9 @@
 					<input class="input" v-model="amount" @blur="changeAmount" type="digit" placeholder="请输入支付金额" />
 				</view>
 			</view>
+			<view class="item tips">
+				Tips: 可自定义支付金额
+			</view>
 		<!-- 	<view class="item pay-list">
 				<view class="pay-type-name">支付形式:</view>
 				<radio-group @change="radioChange" class="payTypeListBox">
@@ -116,7 +119,6 @@
 			getToken(appid,appsecret){
 				uni.request({
 					url: 'https://www.atwillpay.cn/payment/common/getToken',
-					// url: "http://10.32.203.162:4000/payment/common/getToken",
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -213,6 +215,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.tips{
+		color:#409eff;
+		font-size:24rpx;
+	}
 	.title-content {
 		padding-top: 60rpx;
 		display: flex;
