@@ -18,6 +18,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/aliCode/aliCode",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

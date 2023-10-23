@@ -95,6 +95,7 @@
 		},
 		onLoad() {
 			this.orderNo = this.randomNumber();
+			debugger;
 			let query = this.$route.query;
 			if (!query.appid || !query.appsecret){
 				this.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImFwcF9pZCI6InRka2dzY2w0bnp3YTk1bSIsImFwcF9zZWNyZXQiOiI2MGQ0NWNkYjhjMTgyYjU2Nzg0N2QwMGRiNzc3NWY0ZCJ9fQ.GKUB_T-hhivCVi3w1P_V6aSpQ5sl4DRcqzyn9qByVno";
@@ -118,7 +119,8 @@
 			},
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'https://www.atwillpay.cn/payment/common/getToken',
+					// url: 'https://www.atwillpay.cn/payment/common/getToken',
+					url: 'http://10.32.203.162:4000/payment/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -157,7 +159,8 @@
 			payClick() {
 				let token = this.token;
 				uni.request({
-					url: 'https://www.atwillpay.cn/payment/main/createOrder',
+					// url: 'https://www.atwillpay.cn/payment/main/createOrder',
+					url: 'http://10.32.203.162:4000/payment/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
