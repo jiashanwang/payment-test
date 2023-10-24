@@ -8,6 +8,7 @@
 	export default {
 		data() {
 			return {
+				data:{}
 			}
 		},
 		methods: {
@@ -32,13 +33,9 @@
 			 */
 			getAliPayFormData(){
 				uni.request({
-					// url: 'https://www.atwillpay.cn/payment/common/getToken',
-					url: 'http://10.32.203.162:4005/payback/miniprogram/getAliPayObjectTest',
-					data: {
-						// app_id: appid,
-						// app_secret:appsecret,
-					},
-					method: "GET",
+					url: 'https://www.atwillpay.cn/payback/miniprogram/getAliPayObject',
+					data:{...this.data},
+					method: "POST",
 					success: (res) => {
 						let result = res.data;
 						this.generateCode(result);
@@ -55,9 +52,14 @@
 				});
 			},
 		},
-	
-		onLoad(options) {
+		onReady() {
 			this.getAliPayFormData();
+		},
+		onLoad(options) {
+			if (options.data) {
+				console.log("options.data = ", JSON.parse(decodeURIComponent(options.data)))
+				this.data = JSON.parse(decodeURIComponent(options.data));
+			};
 		},
 	}
 </script>

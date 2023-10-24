@@ -45,10 +45,17 @@
 					</label>
 				</radio-group>
 			</view> -->
-			<view class="item payment" @tap="payClick">
-				<image class="wxlogo" src="/static/wxpay.png"></image>
-				<text>微信支付</text>
-			</view>
+			<div class="item payBox payment">
+				<view class="payItem" @tap="payClick(1)">
+					<image class="wxlogo" src="/static/wxpay.png"></image>
+					<text>微信支付</text>
+				</view>
+				<view class="payItem" @tap="payClick(2)">
+					<image class="alilogo" src="/static/ali.png"></image>
+					<text>支付宝支付</text>
+				</view>
+			</div>
+		
 			<view class="footer">
 				<text>财易付 © 2023 All Rights Reserved.</text>
 			</view>
@@ -155,13 +162,21 @@
 					.round(Math.random() * 1000000)).toString();
 				return orderCode;
 			},
-			payClick() {
-				//假数据测试用 start
-				uni.navigateTo({
-					url: "/pages/aliCode/aliCode"
-				});
-				return;
-				//假数据测试用 end
+			payClick(payMethod) {
+				if (payMethod == 2){
+					// 支付宝支付
+					let params = {
+						outOrderNo: this.orderNo,
+						amount: this.amount,
+						notifyUrl:"https://www.atwillpay.com/payment/common/notifyToApp",
+						goodsName: this.goodsName
+					}
+					let queryData = encodeURIComponent(JSON.stringify(params))
+					uni.navigateTo({
+						url: "/pages/aliCode/aliCode?data=" + queryData
+					});
+					return;
+				}
 				let token = this.token;
 				uni.request({
 					url: 'https://www.atwillpay.cn/payment/main/createOrder',
@@ -170,7 +185,7 @@
 						outOrderNo: this.orderNo,
 						amount: this.amount,
 						notify_url: "https://www.atwillpay.com/payment/common/notifyToApp",// 测试回调通知
-						payType: this.payType,
+						payMethod: payMethod,
 					},
 					method: "POST",
 					header: {
@@ -283,7 +298,14 @@
 				}
 			}
 		}
-
+		.payBox{
+			display: flex;
+			justify-content: space-around;
+			margin-bottom:30rpx;
+			.payItem{
+				margin:30rpx;
+			}
+		}
 		.payment {
 			margin-top: 40rpx;
 			margin-bottom: 40rpx;
@@ -293,10 +315,12 @@
 			justify-content: center;
 			align-items: center;
 
-			.wxlogo {
+			.wxlogo,.alilogo {
 				width: 36rpx;
 				height: 36rpx;
 				margin-right: 15rpx;
+				position: relative;
+				top:10rpx;
 			}
 		}
 
