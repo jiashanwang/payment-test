@@ -46,11 +46,11 @@
 				</radio-group>
 			</view> -->
 			<div class="item payBox payment">
-				<view class="payItem" @tap="payClick(1)">
+				<view class="payItem" @tap="payClick('wxpay')">
 					<image class="wxlogo" src="/static/wxpay.png"></image>
 					<text>微信支付</text>
 				</view>
-				<view class="payItem" @tap="payClick(2)">
+				<view class="payItem" @tap="payClick('alipay')">
 					<image class="alilogo" src="/static/ali.png"></image>
 					<text>支付宝支付</text>
 				</view>
@@ -104,7 +104,7 @@
 			this.orderNo = this.randomNumber();
 			let query = this.$route.query;
 			if (!query.appid || !query.appsecret){
-				this.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImFwcF9pZCI6InRka2dzY2w0bnp3YTk1bSIsImFwcF9zZWNyZXQiOiI2MGQ0NWNkYjhjMTgyYjU2Nzg0N2QwMGRiNzc3NWY0ZCJ9fQ.GKUB_T-hhivCVi3w1P_V6aSpQ5sl4DRcqzyn9qByVno";
+				this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFwcF9pZCI6InRkeGo0bzZ3aDFmcW5wMiIsImFwcF9zZWNyZXQiOiIxMTRlMGFmNTIxMGZjNTljZGZmNmIxZTFiNjg5MmY3NiJ9fQ.x274LsJRM854i3FdREiB3yKb-lPfUzMPi8zXhQaOEZQ";
 			}else {
 				this.getToken(query.appid,query.appsecret);
 			}
@@ -125,8 +125,8 @@
 			},
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'https://www.atwillpay.cn/payment/common/getToken',
-					// url: 'http://10.32.203.162:4005/payment/common/getToken',
+					url: 'https://www.atwillpay.cn/paymentzpw/common/getToken',
+					// url: 'http://192.168.10.101:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -168,7 +168,7 @@
 					let params = {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notifyUrl:"https://www.atwillpay.com/payment/common/notifyToApp",
+						notifyUrl:"https://www.atwillpay.com/paymentzpw/common/notifyToApp",
 						goodsName: this.goodsName
 					}
 					let queryData = encodeURIComponent(JSON.stringify(params))
@@ -179,12 +179,12 @@
 				}
 				let token = this.token;
 				uni.request({
-					url: 'https://www.atwillpay.cn/payment/main/createOrder',
-					// url: 'http://10.32.203.162:4005/payment/main/createOrder',
+					url: 'https://www.atwillpay.cn/paymentzpw/main/createOrder',
+					// url: 'http://192.168.10.101:4001/paymentzpw/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "https://www.atwillpay.com/payment/common/notifyToApp",// 测试回调通知
+						notify_url: "https://www.atwillpay.com/paymentzpw/common/notifyToApp",// 测试回调通知
 						payMethod: payMethod,
 					},
 					method: "POST",
