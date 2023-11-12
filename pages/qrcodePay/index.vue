@@ -216,16 +216,6 @@
 			cursor: pointer;
 		}
 	}
-
-	// .fade-enter-active,
-	// .fade-leave-active {
-	//   transition: opacity .5s ease;
-	// }
-
-	// .fade-enter,
-	// .fade-leave-to {
-	//   transition: 0 .5s ease;
-	// }
 	.saoyisao {
 		display: flex;
 		justify-content: center;

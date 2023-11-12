@@ -10,7 +10,7 @@
 					<image class="img" src="/static/tiaoxingma.png"></image>
 				</view>
 				<view class="inputBox">
-					<input class="input" v-model="orderNo" />
+					<input class="input" v-model="orderNo" disabled />
 				</view>
 
 			</view>
@@ -59,6 +59,7 @@
 			<view class="footer">
 				<text>财易付 © 2023 All Rights Reserved.</text>
 			</view>
+			<view style="margin-top:20rpx;" @click="testClick">点击测试</view>
 		</view>
 		<view id="myQrcode">
 
@@ -111,6 +112,12 @@
 			
 		},
 		methods: {
+			testClick(){
+				debugger;
+				uni.navigateTo({
+					url: "/pages/payCode/wx"
+				});
+			},
 			radioChange(event) {
 				this.payType = event.detail.value;
 				for (let i = 0; i < this.payTypeList.length; i++) {
