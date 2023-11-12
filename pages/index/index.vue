@@ -99,23 +99,26 @@
 					},
 				],
 				current: 1, // 单选框下标
+				token:"",
 			}
 		},
 		onLoad() {
 			this.orderNo = this.randomNumber();
 			let query = this.$route.query;
-			if (!query.appid || !query.appsecret){
-				this.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFwcF9pZCI6InRkeGo0bzZ3aDFmcW5wMiIsImFwcF9zZWNyZXQiOiIxMTRlMGFmNTIxMGZjNTljZGZmNmIxZTFiNjg5MmY3NiJ9fQ.x274LsJRM854i3FdREiB3yKb-lPfUzMPi8zXhQaOEZQ";
-			}else {
-				this.getToken(query.appid,query.appsecret);
+			if (query.appid && query.appsecret){
+				let token = window.sessionStorage.getItem("token");
+				if (token){
+					this.token = token;
+				}else {
+					this.getToken(query.appid,query.appsecret);
+				}
 			}
 			
 		},
 		methods: {
 			testClick(){
-				debugger;
 				uni.navigateTo({
-					url: "/pages/payCode/wx"
+					url: "/pages/payHome/payCode"
 				});
 			},
 			radioChange(event) {
@@ -132,7 +135,7 @@
 			},
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'https://www.atwillpay.cn/paymentzpw/common/getToken',
+					url: 'http://1.14.43.168/paymentzpw/common/getToken',
 					// url: 'http://192.168.10.101:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
@@ -144,11 +147,13 @@
 						if (result.code == 0) {
 							// 成功
 							this.token = result.data;
+							window.sessionStorage.setItem("token",token);
 						} else {
 							uni.showToast({
 								title: "token获取失败",
 								icon: 'none'
-							})
+							});
+							window.sessionStorage.removeItem("token");
 						}
 					}
 				});
@@ -170,12 +175,12 @@
 				return orderCode;
 			},
 			payClick(payMethod) {
-				if (payMethod == 2){
+				if (payMethod == 'alipay'){
 					// 支付宝支付
 					let params = {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notifyUrl:"https://www.atwillpay.com/paymentzpw/common/notifyToApp",
+						notifyUrl:"http://1.14.43.168/paymentzpw/common/notifyToApp",
 						goodsName: this.goodsName
 					}
 					let queryData = encodeURIComponent(JSON.stringify(params))
@@ -186,12 +191,12 @@
 				}
 				let token = this.token;
 				uni.request({
-					url: 'https://www.atwillpay.cn/paymentzpw/main/createOrder',
+					url: 'http://1.14.43.168/paymentzpw/main/createOrder',
 					// url: 'http://192.168.10.101:4001/paymentzpw/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "https://www.atwillpay.com/paymentzpw/common/notifyToApp",// 测试回调通知
+						notify_url: "http://1.14.43.168/paymentzpw/common/notifyToApp",// 测试回调通知
 						payMethod: payMethod,
 					},
 					method: "POST",

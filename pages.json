@@ -28,7 +28,7 @@
             
         },
         {
-        	"path" : "pages/payCode/wx",
+        	"path" : "pages/payHome/payCode",
         	"style" : 
         	{
         		"navigationBarTitleText" : "",
