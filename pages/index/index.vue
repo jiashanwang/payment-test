@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="title-content">
 			<image class="logo" src="/static/caiyifu.jpg"></image>
-			<view class="title">财易付 - 测试支付</view>
+			<view class="title">财易付</view>
 		</view>
 		<view class="order-area">
 			<view class="item">

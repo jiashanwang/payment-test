@@ -1,7 +1,7 @@
 {
     "name" : "财易付",
     "appid" : "__UNI__1C18168",
-    "description" : "财易付-支付测试页面",
+    "description" : "财易付",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -70,7 +70,7 @@
     },
     "vueVersion" : "2",
     "h5" : {
-        "title" : "财易付 - 支付测试",
+        "title" : "财易付",
         "router" : {
             "mode" : "hash",
             "base" : "/payment/"
