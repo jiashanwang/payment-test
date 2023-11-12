@@ -72,8 +72,8 @@
     "h5" : {
         "title" : "财易付 - 支付测试",
         "router" : {
-            "mode" : "history",
-            "base" : "/testpay/"
+            "mode" : "hash",
+            "base" : "/payment/"
         }
     }
 }

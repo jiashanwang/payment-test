@@ -107,6 +107,10 @@
 			 * 获取支付二维码
 			 */
 			getPayCode(){	
+				uni.showLoading({
+					title: '正在连接，请稍候...',
+					mask: true,
+				});
 				let payMethod = this.payMethod;
 				let token = this.token;
 				uni.request({
@@ -124,6 +128,7 @@
 						'Authorization': 'Bearer ' + this.token
 					},
 					success: (res) => {
+						uni.hideLoading();
 						let result = res.data;				
 						if (result.code == 0) {
 							// 成功
@@ -161,6 +166,10 @@
 							})
 						}
 				
+					},
+					fail: (err) => {},
+					complete: () => {
+						uni.hideLoading();
 					}
 				});
 			},
