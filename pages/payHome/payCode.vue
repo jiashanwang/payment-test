@@ -79,8 +79,8 @@
 		methods: {
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'http://1.14.43.168/paymentzpw/common/getToken',
-					// url: 'http://192.168.10.101:4001/paymentzpw/common/getToken',
+					url: 'http://1.14.43.168/paymentcmj/common/getToken',
+					// url: 'http://192.168.10.101:4001/paymentcmj/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -114,12 +114,12 @@
 				let payMethod = this.payMethod;
 				let token = this.token;
 				uni.request({
-					url: 'http://1.14.43.168/paymentzpw/main/createOrder',
-					// url: 'http://192.168.10.101:4001/paymentzpw/main/createOrder',
+					url: 'http://1.14.43.168/paymentcmj/main/createOrder',
+					// url: 'http://192.168.10.101:4001/paymentcmj/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "http://1.14.43.168/paymentzpw/common/notifyToApp",// 测试回调通知
+						notify_url: "http://1.14.43.168/paymentcmj/common/notifyToApp",// 测试回调通知
 						payMethod: payMethod,
 						userName:this.userName
 					},

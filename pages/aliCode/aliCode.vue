@@ -33,7 +33,7 @@
 			 */
 			getAliPayFormData(){
 				uni.request({
-					url: 'http://1.14.43.168/paybackzpw/miniprogram/getAliPayObject',
+					url: 'http://1.14.43.168/paymentcmj/miniprogram/getAliPayObject',
 					data:{...this.data},
 					method: "POST",
 					success: (res) => {

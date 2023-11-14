@@ -59,7 +59,6 @@
 			<view class="footer">
 				<text>财易付 © 2023 All Rights Reserved.</text>
 			</view>
-			<view style="margin-top:20rpx;" @click="testClick">点击测试</view>
 		</view>
 		<view id="myQrcode">
 
@@ -116,11 +115,6 @@
 			
 		},
 		methods: {
-			testClick(){
-				uni.navigateTo({
-					url: "/pages/payHome/payCode"
-				});
-			},
 			radioChange(event) {
 				this.payType = event.detail.value;
 				for (let i = 0; i < this.payTypeList.length; i++) {
@@ -135,7 +129,7 @@
 			},
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'http://1.14.43.168/paymentzpw/common/getToken',
+					url: 'http://1.14.43.168/paymentcmj/common/getToken',
 					// url: 'http://192.168.10.101:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
@@ -180,7 +174,7 @@
 					let params = {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notifyUrl:"http://1.14.43.168/paymentzpw/common/notifyToApp",
+						notifyUrl:"http://1.14.43.168/paymentcmj/common/notifyToApp",
 						goodsName: this.goodsName
 					}
 					let queryData = encodeURIComponent(JSON.stringify(params))
@@ -191,12 +185,12 @@
 				}
 				let token = this.token;
 				uni.request({
-					url: 'http://1.14.43.168/paymentzpw/main/createOrder',
-					// url: 'http://192.168.10.101:4001/paymentzpw/main/createOrder',
+					url: 'http://1.14.43.168/paymentcmj/main/createOrder',
+					// url: 'http://192.168.10.101:4001/paymentcmj/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "http://1.14.43.168/paymentzpw/common/notifyToApp",// 测试回调通知
+						notify_url: "http://1.14.43.168/paymentcmj/common/notifyToApp",// 测试回调通知
 						payMethod: payMethod,
 					},
 					method: "POST",
