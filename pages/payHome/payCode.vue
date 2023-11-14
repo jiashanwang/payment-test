@@ -77,10 +77,13 @@
 			}
 		},
 		methods: {
+			changeAmount(event) {
+				this.amount = Number(event.target.value.match(/^\d*(\.?\d{0,2})/g)[0]);
+			},
 			getToken(appid,appsecret){
 				uni.request({
 					url: 'http://1.14.43.168/paymentcmj/common/getToken',
-					// url: 'http://192.168.10.101:4001/paymentcmj/common/getToken',
+					// url: 'http://127.0.0.1:4001/paymentcmj/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -107,6 +110,17 @@
 			 * 获取支付二维码
 			 */
 			getPayCode(){	
+				// 支付金额不能为空
+				if(!this.amount || Number(this.amount) == 0){
+					uni.showToast({
+					    title: '请输入支付金额!',
+					    //将值设置为 success 或者直接不用写icon这个参数
+					    icon: 'none',
+					    //显示持续时间为 2秒
+					    duration: 2000
+					});
+					return ;
+				}
 				uni.showLoading({
 					title: '正在连接，请稍候...',
 					mask: true,
@@ -115,7 +129,7 @@
 				let token = this.token;
 				uni.request({
 					url: 'http://1.14.43.168/paymentcmj/main/createOrder',
-					// url: 'http://192.168.10.101:4001/paymentcmj/main/createOrder',
+					// url: 'http://127.0.0.1:4001/paymentcmj/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
@@ -221,7 +235,9 @@
 	}
 	.amountBold{
 		color:#ff0000;
-		font-size:24rpx;
+		font-size:40rpx;
+		display: inline-block;
+		margin-right:14rpx;
 	}
 	.title {
 		text-align: center;
