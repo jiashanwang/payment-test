@@ -285,7 +285,7 @@
 			display: flex;
 			justify-content: flex-start;
 			margin: 20rpx;
-			height: 60rpx;
+			height: 88rpx;
 
 			.icon {
 				display: flex;
@@ -293,7 +293,7 @@
 				align-items: center;
 				background-color: #eeeeee;
 				width: 80rpx;
-				height: 100%;
+				height: 102%;
 				border-right: 1rpx dashed #cccccc;
 				border-top-left-radius: 10%;
 				border-bottom-left-radius: 10%;
@@ -316,12 +316,13 @@
 					height: 100%;
 					// width:100%;
 					padding-left: 20rpx;
-					font-size: 26rpx;
+					font-size: 36rpx;
 				}
 			}
 			.orderInput {
 				.input{
 					background-color: #eeeeee;
+					font-size:36rpx;
 				}
 			}
 		}
