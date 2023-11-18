@@ -1,11 +1,25 @@
 <template>
 	<view>
-		<view class="payMethodLogo">
+<!-- 		<view class="payMethodLogo">
 			<image class="img" v-if="payMethod=='wxpay'" src="../../static/wxlogo.png" mode="widthFix"></image>
 			<image class="img" v-if="payMethod=='alipay'" src="../../static/alilogo.png" mode="widthFix"></image>
+		</view> -->
+		<view class="company">
+			<view class="title">财易付网络科技</view>
+			<view class="method">
+				<view class="type">支付方式</view>
+			</view>
+			<view class="payMethodList">
+				<view :class="{'item':true,'active':selectedType=='wxpay'}" @tap="chanageMethodType('wxpay')">
+					<image class="img" src="../../static/wxpay.png" mode="widthFix"></image>
+				</view>
+				<view  :class="{'item':true,'active':selectedType=='alipay'}" @tap="chanageMethodType('alipay')">
+					<image class="img" src="../../static/ali.png" mode="widthFix"></image>
+				</view>
+			</view>
 		</view>
-		<view class="title" v-if="payMethod=='wxpay'">微信安全支付</view>
-		<view class="title" v-if="payMethod=='alipay'">支付宝安全支付</view>
+		<!-- <view class="title" v-if="payMethod=='wxpay'">微信安全支付</view>
+		<view class="title" v-if="payMethod=='alipay'">支付宝安全支付</view> -->
 		<view class="title orderno">订单号:{{orderNo}}</view>
 		<view class="order-area">
 			<view class="item">
@@ -59,14 +73,15 @@
 				userName:"",// 用户姓名
 				amount:"",// 用户支付金额
 				token:"",
-				payMethod:"alipay", // 支付方式发wxpay alipay
+				payMethod:"wxpay", // 支付方式发wxpay alipay
 				url:"",// 支付链接
+				selectedType:"wxpay",
 			}
 		},
 		onLoad() {
 			this.orderNo = this.randomNumber();
 			let query = this.$route.query;
-			this.payMethod = query.payMethod?query.payMethod:"alipay";
+			// this.payMethod = query.payMethod?query.payMethod:"alipay";
 			if (query.appid && query.appsecret){
 				let token = window.sessionStorage.getItem("token");
 				if (token){
@@ -242,11 +257,44 @@
 					.round(Math.random() * 1000000)).toString();
 				return orderCode;
 			},
+			/**
+			 * 支付方式的切换
+			 */
+			chanageMethodType(method){
+				this.selectedType = method;
+				this.payMethod = method;
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	.payMethodList{
+		width:60%;
+		margin:0 auto;
+		margin-top:20rpx;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		.img{
+			width:40rpx;
+		}
+		.item{
+			padding:20rpx;
+			padding:16rpx 20rpx;
+			margin-right:30rpx;
+			background-color: #ffffff;
+			border-radius: 10rpx;
+		}
+		.active{
+			border:1rpx solid #327ab7;
+		}
+	}
+	.method{
+		margin:0 auto;
+		width:60%;
+		color:#7f7f7f;
+	}
 	.payMethodLogo {
 		display: flex;
 		justify-content: center;
@@ -255,6 +303,19 @@
 		.img {
 			width: 250rpx;
 		}
+	}
+	.company{
+		width:80%;
+		margin:0 auto;
+		background-color: #f8f8f8;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
+		margin-top: 40rpx;
+		font-weight: bold;
+		color:#000000;
+		padding:20rpx 20rpx 50rpx 20rpx;
 	}
 	.amountBold{
 		color:#ff0000;
@@ -293,7 +354,7 @@
 				align-items: center;
 				background-color: #eeeeee;
 				width: 80rpx;
-				height: 102%;
+				height: 103%;
 				border-right: 1rpx dashed #cccccc;
 				border-top-left-radius: 10%;
 				border-bottom-left-radius: 10%;
