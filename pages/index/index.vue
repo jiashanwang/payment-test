@@ -174,7 +174,7 @@
 					let params = {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notifyUrl:"http://1.14.43.168/paymentcmj/common/notifyToApp",
+						notifyUrl:"",
 						goodsName: this.goodsName
 					}
 					let queryData = encodeURIComponent(JSON.stringify(params))

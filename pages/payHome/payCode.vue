@@ -36,7 +36,7 @@
 				获取付款码
 			</view>
 			<view class="item payCodeBox payAliBgColor" v-if="payMethod=='alipay'" @tap="getPayCode">
-				获取付款码
+				立即支付
 			</view>
 		</view>
 		<view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码支付 </view>	
@@ -133,7 +133,7 @@
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "http://1.14.43.168/paymentcmj/common/notifyToApp",// 测试回调通知
+						notify_url: "",// 测试回调通知
 						payMethod: payMethod,
 						userName:this.userName
 					},
@@ -171,7 +171,13 @@
 								// 支付宝H5支付
 								let url = result.data.url;
 								this.url = url;
-								this.getQrcodeImg(url);
+								// 生成支付码的方式 beging
+								// this.getQrcodeImg(url);
+								// 生成支付码的方式 end
+								//直接拉起支付的方式 begin
+								this.generateCode(url);
+								//直接拉起支付的方式 begin
+							
 							}
 						} else {
 							uni.showToast({
@@ -202,6 +208,23 @@
 				qr.canvasContext = canvasContext;
 				// 调用绘制方法将二维码图案绘制到canvas上
 				qr.drawCanvas();
+			},
+			//直接拉起支付
+			generateCode(url){
+				// 方法1:
+				 // const newPage = window.open(); 
+				 // newPage.location.href = url
+				 // 方法2: 推荐
+			  const a = document.createElement('a');
+				   const id = 'newpage'
+				   a.setAttribute('href', url);
+				   a.setAttribute('target', '_self');
+				   a.setAttribute('id', id);
+				   // 防止反复添加
+				   if(!document.getElementById(id)) {
+					   document.body.appendChild(a);
+				   }
+				   a.click();
 			},
 			randomNumber() {
 				const now = new Date()
