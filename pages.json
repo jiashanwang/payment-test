@@ -35,6 +35,14 @@
 				"navigationStyle": "custom",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/payHomeH5/payHomeH5",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {
