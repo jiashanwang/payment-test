@@ -5,7 +5,7 @@
 			<image class="img" v-if="payMethod=='alipay'" src="../../static/alilogo.png" mode="widthFix"></image>
 		</view> -->
 		<view class="company">
-			<view class="title">财易付网络科技</view>
+			<view class="name">财易付远程收款</view>
 			<view class="method">
 				<view class="type">支付方式</view>
 			</view>
@@ -53,11 +53,11 @@
 				立即支付
 			</view>
 		</view>
-		<view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码支付 </view>	
+		<view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码打开小程序支付 </view>	
 		<view class="qrcode titleDesc" v-if="url && payMethod=='alipay'"> 支付宝或浏览器扫描二维码支付 </view>	
 		<view class="qrcode titleAmount" v-if="url"> 支付金额：<span class="amountBold">{{amount}}</span> 元</view>	
 		
-		<view class="qrcode">
+		<view class="qrcode qrcodeBox">
 			<canvas id="qrcode" canvas-id="qrcode" style="width: 200px;height: 200px;"></canvas>
 		</view>
 		
@@ -272,12 +272,12 @@
 	.payMethodList{
 		width:60%;
 		margin:0 auto;
-		margin-top:20rpx;
+		margin-top:30rpx;
 		display: flex;
-		justify-content: flex-start;
+		justify-content: space-between;
 		align-items: center;
 		.img{
-			width:40rpx;
+			width:70rpx;
 		}
 		.item{
 			padding:20rpx;
@@ -288,12 +288,14 @@
 		}
 		.active{
 			border:1rpx solid #327ab7;
+			background-color: #f8f8f8;
 		}
 	}
 	.method{
-		margin:0 auto;
+		margin:20rpx 20rpx 10rpx 20rpx;
 		width:60%;
 		color:#7f7f7f;
+		font-size:30rpx;
 	}
 	.payMethodLogo {
 		display: flex;
@@ -305,17 +307,23 @@
 		}
 	}
 	.company{
-		width:80%;
-		margin:0 auto;
-		background-color: #f8f8f8;
+		// width:80%;
+		margin:0 30rpx 30rpx 30rpx;
+		// background-color: #f8f8f8;
+		background-color: #ffffff;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-content: center;
-		margin-top: 40rpx;
-		font-weight: bold;
-		color:#000000;
 		padding:20rpx 20rpx 50rpx 20rpx;
+		border-bottom:1rpx dashed #cccccc;
+		.name{
+			font-family: Arial, "Microsoft YaHei";	
+			font-size:40rpx;
+			color:#585858;
+			font-weight: bold;
+			text-align: center;
+		}
 	}
 	.amountBold{
 		color:#ff0000;
@@ -326,6 +334,9 @@
 	.title {
 		text-align: center;
 		margin: 25rpx;
+	}
+	.orderno{
+		font-size:32rpx;
 	}
 	.qrcode {
 		display: flex;
@@ -340,7 +351,7 @@
 		margin:30rpx;
 	}
 	.order-area {
-		border: 1rpx dashed #327ab7;
+		// border: 1rpx dashed #327ab7;
 		margin: 40rpx 40rpx;
 		.item {
 			display: flex;
@@ -353,15 +364,15 @@
 				justify-content: center;
 				align-items: center;
 				background-color: #eeeeee;
-				width: 80rpx;
-				height: 103%;
+				width: 110rpx;
+				height: 104%;
 				border-right: 1rpx dashed #cccccc;
 				border-top-left-radius: 10%;
 				border-bottom-left-radius: 10%;
 
 				.img {
-					width: 44rpx;
-					height: 44rpx;
+					width: 54rpx;
+					height: 54rpx;
 				}
 			}
 
@@ -402,6 +413,8 @@
 		.payAliBgColor{
 			background-color: #00a9f1;
 		}
-	
+		.qrcodeBox{
+			padding-bottom:80rpx;
+		}
 	}
 </style>
