@@ -13,9 +13,9 @@
 				<view :class="{'item':true,'active':selectedType=='wxpay'}" @tap="chanageMethodType('wxpay')">
 					<image class="img" src="../../static/wxpay.png" mode="widthFix"></image>
 				</view>
-				<view  :class="{'item':true,'active':selectedType=='alipay'}" @tap="chanageMethodType('alipay')">
+			<!-- 	<view  :class="{'item':true,'active':selectedType=='alipay'}" @tap="chanageMethodType('alipay')">
 					<image class="img" src="../../static/ali.png" mode="widthFix"></image>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- <view class="title" v-if="payMethod=='wxpay'">微信安全支付</view>
@@ -54,8 +54,8 @@
 			</view>
 		</view>
 		<view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码打开小程序支付 </view>	
-		<view class="qrcode titleDesc" v-if="url && payMethod=='alipay'"> 支付宝或浏览器扫描二维码支付 </view>	
-		<view class="qrcode titleAmount" v-if="url"> 支付金额：<span class="amountBold">{{amount}}</span> 元</view>	
+		<!-- <view class="qrcode titleDesc" v-if="url && payMethod=='alipay'"> 支付宝或浏览器扫描二维码支付 </view>	 -->
+		<view class="qrcode titleAmount" v-if="url && payMethod=='wxpay'"> 支付金额：<span class="amountBold">{{amount}}</span> 元</view>	
 		
 		<view class="qrcode qrcodeBox">
 			<canvas id="qrcode" canvas-id="qrcode" style="width: 200px;height: 200px;"></canvas>
@@ -98,7 +98,7 @@
 			getToken(appid,appsecret){
 				uni.request({
 					url: 'http://1.14.43.168/paymentcmj/common/getToken',
-					// url: 'http://127.0.0.1:4001/paymentcmj/common/getToken',
+					// url: 'http://127.0.0.1:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -144,7 +144,7 @@
 				let token = this.token;
 				uni.request({
 					url: 'http://1.14.43.168/paymentcmj/main/createOrder',
-					// url: 'http://127.0.0.1:4001/paymentcmj/main/createOrder',
+					// url: 'http://127.0.0.1:4001/paymentzpw/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
@@ -181,7 +181,8 @@
 								// 微信小程序支付
 								let url = result.data.url_link;
 								this.url = url;
-								this.getQrcodeImg(url);
+								// this.getQrcodeImg(url);
+								this.generateCode(url);
 							}else if (result.data.paymentType == 5){
 								// 支付宝H5支付
 								let url = result.data.url;
