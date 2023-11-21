@@ -1,10 +1,11 @@
 <template>
 	<view>
-<!-- 		<view class="payMethodLogo">
-			<image class="img" v-if="payMethod=='wxpay'" src="../../static/wxlogo.png" mode="widthFix"></image>
-			<image class="img" v-if="payMethod=='alipay'" src="../../static/alilogo.png" mode="widthFix"></image>
-		</view> -->
-		<view class="company">
+		<view class="payMethodLogo">
+			<!-- <image class="img" v-if="payMethod=='wxpay'" src="../../static/wxlogo.png" mode="widthFix"></image> -->
+			<image class="img" src="../../static/wxlogo.png" mode="widthFix"></image>
+			<!-- <image class="img" v-if="payMethod=='alipay'" src="../../static/alilogo.png" mode="widthFix"></image> -->
+		</view>
+	<!-- 	<view class="company">
 			<view class="name">财易付远程收款</view>
 			<view class="method">
 				<view class="type">支付方式</view>
@@ -12,12 +13,12 @@
 			<view class="payMethodList">
 				<view :class="{'item':true,'active':selectedType=='wxpay'}" @tap="chanageMethodType('wxpay')">
 					<image class="img" src="../../static/wxpay.png" mode="widthFix"></image>
-				</view>
+				</view> -->
 			<!-- 	<view  :class="{'item':true,'active':selectedType=='alipay'}" @tap="chanageMethodType('alipay')">
 					<image class="img" src="../../static/ali.png" mode="widthFix"></image>
 				</view> -->
-			</view>
-		</view>
+<!-- 			</view>
+		</view> -->
 		<!-- <view class="title" v-if="payMethod=='wxpay'">微信安全支付</view>
 		<view class="title" v-if="payMethod=='alipay'">支付宝安全支付</view> -->
 		<view class="title orderno">订单号:{{orderNo}}</view>
@@ -35,7 +36,7 @@
 					<image class="img" src="/static/username.png"></image>
 				</view>
 				<view class="inputBox">
-					<input class="input" v-model="userName" placeholder="请输入用户名称" />
+					<input class="input" v-model="userName" placeholder="请输入付款姓名" />
 				</view>
 			</view>
 			<view class="item">
@@ -46,16 +47,17 @@
 					<input class="input" v-model="amount" @blur="changeAmount" type="digit" placeholder="请输入支付金额" />
 				</view>
 			</view>
+			<view class="tips">Tips: 点击立即支付 -> 打开小程序 -> 完成支付</view>
 			<view class="item payCodeBox" v-if="payMethod=='wxpay'" @tap="getPayCode">
-				获取付款码
+				立即支付
 			</view>
 			<view class="item payCodeBox payAliBgColor" v-if="payMethod=='alipay'" @tap="getPayCode">
 				立即支付
 			</view>
 		</view>
-		<view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码打开小程序支付 </view>	
+		<!-- <view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码打开小程序支付 </view>	 -->
 		<!-- <view class="qrcode titleDesc" v-if="url && payMethod=='alipay'"> 支付宝或浏览器扫描二维码支付 </view>	 -->
-		<view class="qrcode titleAmount" v-if="url && payMethod=='wxpay'"> 支付金额：<span class="amountBold">{{amount}}</span> 元</view>	
+		<!-- <view class="qrcode titleAmount" v-if="url && payMethod=='wxpay'"> 支付金额：<span class="amountBold">{{amount}}</span> 元</view>	 -->
 		
 		<view class="qrcode qrcodeBox">
 			<canvas id="qrcode" canvas-id="qrcode" style="width: 200px;height: 200px;"></canvas>
@@ -97,7 +99,7 @@
 			},
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'http://1.14.43.168/paymentcmj/common/getToken',
+					url: 'https://www.atwillpay.cn/paymentcmj/common/getToken',
 					// url: 'http://127.0.0.1:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
@@ -143,7 +145,7 @@
 				let payMethod = this.payMethod;
 				let token = this.token;
 				uni.request({
-					url: 'http://1.14.43.168/paymentcmj/main/createOrder',
+					url: 'https://www.atwillpay.cn/paymentcmj/main/createOrder',
 					// url: 'http://127.0.0.1:4001/paymentzpw/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
@@ -270,6 +272,12 @@
 </script>
 
 <style lang="scss" scoped>
+	.tips{
+		color:#ff0000;
+		margin-top:30rpx;
+		font-size:24rpx;
+		margin-left:20rpx;
+	}
 	.payMethodList{
 		width:60%;
 		margin:0 auto;
@@ -352,7 +360,7 @@
 		margin:30rpx;
 	}
 	.order-area {
-		// border: 1rpx dashed #327ab7;
+		border: 1rpx dashed #327ab7;
 		margin: 40rpx 40rpx;
 		.item {
 			display: flex;
@@ -366,7 +374,7 @@
 				align-items: center;
 				background-color: #eeeeee;
 				width: 110rpx;
-				height: 104%;
+				height: 105%;
 				border-right: 1rpx dashed #cccccc;
 				border-top-left-radius: 10%;
 				border-bottom-left-radius: 10%;
