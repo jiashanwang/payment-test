@@ -43,6 +43,14 @@
         		"navigationBarTitleText" : "",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/indexBack/indexBack",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {

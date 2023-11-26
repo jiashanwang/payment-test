@@ -21,7 +21,13 @@
 		</view> -->
 		<!-- <view class="title" v-if="payMethod=='wxpay'">微信安全支付</view>
 		<view class="title" v-if="payMethod=='alipay'">支付宝安全支付</view> -->
-		<view class="title orderno">订单号:{{orderNo}}</view>
+		<view class="notice">s
+			<!-- <view class="item">这是微信专用通道</view> -->
+			<!-- <view class="item">请用<span style="color:#ff0000;font-size:46rpx;">微信</span>或者浏览器<span style="color:#ff0000;font-size:46rpx;">扫码</span>进来;</view> -->
+			<view class="item"><span style="font-size: 24rpx;">仅支持</span><span style="color:#ff0000;font-size:90rpx;">微信扫码</span></view>
+		</view>	
+	
+		<!-- <view class="title orderno">订单号:{{orderNo}}</view> -->
 		<view class="order-area">
 			<view class="item">
 				<view class="icon">
@@ -55,10 +61,14 @@
 				立即支付
 			</view>
 		</view>
+	
 		<!-- <view class="qrcode titleDesc" v-if="url && payMethod=='wxpay'"> 微信扫描二维码打开小程序支付 </view>	 -->
 		<!-- <view class="qrcode titleDesc" v-if="url && payMethod=='alipay'"> 支付宝或浏览器扫描二维码支付 </view>	 -->
 		<!-- <view class="qrcode titleAmount" v-if="url && payMethod=='wxpay'"> 支付金额：<span class="amountBold">{{amount}}</span> 元</view>	 -->
-		
+	<!-- 	<view class="notice">
+			<view class="item">如果您是用支付宝扫码进来的，</view>
+			<view class="item">请退出，再重新用微信APP扫码进来</view>
+		</view> -->
 		<view class="qrcode qrcodeBox">
 			<canvas id="qrcode" canvas-id="qrcode" style="width: 200px;height: 200px;"></canvas>
 		</view>
@@ -272,6 +282,18 @@
 </script>
 
 <style lang="scss" scoped>
+	.notice{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size:40rpx;
+		margin-top:30rpx;
+	}
+	.notice2{
+		color:#00a9f1;
+		font-size:30rpx;
+	}
 	.tips{
 		color:#ff0000;
 		margin-top:30rpx;
@@ -425,5 +447,6 @@
 		.qrcodeBox{
 			padding-bottom:80rpx;
 		}
+		
 	}
 </style>
