@@ -154,11 +154,11 @@
 				let token = this.token;
 				uni.request({
 					url: 'https://www.atwillpay.cn/paymentcmj/main/createOrder',
-					// url: 'http://127.0.0.1:4001/paymentzpw/main/createOrder',
+					// url: 'http://127.0.0.1:4001/paymentcmj/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "",// 测试回调通知
+						notifyUrl: "",// 测试回调通知
 						payMethod: payMethod,
 						userName:this.userName
 					},

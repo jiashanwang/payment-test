@@ -160,7 +160,7 @@
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
-						notify_url: "",// 测试回调通知
+						notifyUrl: "",// 测试回调通知
 						payMethod: payMethod,
 						userName:this.userName
 					},
