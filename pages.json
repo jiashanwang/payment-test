@@ -1,6 +1,22 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/alipay/alipay",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/wxpay/wxpay",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
@@ -8,51 +24,47 @@
 				"enablePullDownRefresh": true
 			}
 		},
-        {
-            "path" : "pages/qrcodePay/index",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-               "navigationStyle": "custom",
-               "enablePullDownRefresh": true
-            }
-            
-        }
-        ,{
-            "path" : "pages/aliCode/aliCode",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        },
-        {
-        	"path" : "pages/payHome/payCode",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : "",
+		{
+			"path": "pages/qrcodePay/index",
+			"style": {
+				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
-        		"enablePullDownRefresh" : false
-        	}
-        },
-        {
-        	"path" : "pages/payHomeH5/payHomeH5",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : "",
-        		"enablePullDownRefresh" : false
-        	}
-        },
-        {
-        	"path" : "pages/indexBack/indexBack",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : "",
-        		"enablePullDownRefresh" : false
-        	}
-        }
-    ],
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/aliCode/aliCode",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/payHome/payCode",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/payHomeH5/payHomeH5",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/indexBack/indexBack",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+
+
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
