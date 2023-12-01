@@ -1,7 +1,7 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/alipay/alipay",
+			"path": "pages/wxpay/wxpay",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
@@ -9,7 +9,7 @@
 			}
 		},
 		{
-			"path": "pages/wxpay/wxpay",
+			"path": "pages/alipay/alipay",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",

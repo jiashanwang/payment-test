@@ -3,33 +3,34 @@
 		<view class="payMethodLogo">
 			<image class="img" src="../../static/wxlogo.png" mode="widthFix"></image>
 		</view>
-		<view class="title">微信安全支付</view>
+		<view class="title wxTitle">微信安全支付</view>
 		<view class="order-area">
-			<view class="item">
+		<!-- 	<view class="item">
 				<view class="icon">
 					<image class="img" src="/static/tiaoxingma.png"></image>
 				</view>
 				<view class="inputBox orderInput">
 					<input class="input" v-model="orderNo" disabled />
 				</view>
-			</view>
-			<view class="item">
+			</view> -->
+		<!-- 	<view class="item">
 				<view class="icon">
 					<image class="img" src="/static/username.png"></image>
 				</view>
 				<view class="inputBox">
 					<input class="input" v-model="userName" placeholder="请输入付款姓名" />
 				</view>
-			</view>
-			<view class="item">
+			</view> -->
+		<!-- 	<view class="item">
 				<view class="icon">
 					<image class="img" src="/static/amount.png"></image>
 				</view>
 				<view class="inputBox">
 					<input class="input" v-model="amount" @blur="changeAmount" type="digit" placeholder="请输入支付金额" />
 				</view>
-			</view>
-			<view class="tips">Tips: 点击立即支付 -> 打开小程序 ->选择待充值的金额商品 -> 完成支付 -> 自动充值成功</view>
+			</view> -->
+			<view class="tips wxTitle">支付步骤: </view>
+			<view class="tipDesc">点击立即支付 -> 打开小程序 ->选择要充值金额的任意商品下单 -> 完成支付 -> 自动充值成功!</view>
 			<view class="item payCodeBox" @tap="getPayCode">
 				立即支付
 			</view>
@@ -44,7 +45,7 @@
 			return {
 				orderNo: "", //订单号
 				userName: "", // 用户姓名
-				amount: "", // 用户支付金额
+				amount:1, // 用户支付金额
 				token: "",
 				payMethod: "wxpay", // 支付方式发wxpay alipay
 				url: "", // 支付链接
@@ -97,16 +98,16 @@
 			 */
 			getPayCode() {
 				// 支付金额不能为空
-				if (!this.amount || Number(this.amount) == 0) {
-					uni.showToast({
-						title: '请输入支付金额!',
-						//将值设置为 success 或者直接不用写icon这个参数
-						icon: 'none',
-						//显示持续时间为 2秒
-						duration: 2000
-					});
-					return;
-				}
+				// if (!this.amount || Number(this.amount) == 0) {
+				// 	uni.showToast({
+				// 		title: '请输入支付金额!',
+				// 		//将值设置为 success 或者直接不用写icon这个参数
+				// 		icon: 'none',
+				// 		//显示持续时间为 2秒
+				// 		duration: 2000
+				// 	});
+				// 	return;
+				// }
 				uni.showLoading({
 					title: '正在连接，请稍候...',
 					mask: true,
@@ -230,6 +231,7 @@
 </script>
 
 <style lang="scss" scoped>
+	
 	.notice {
 		display: flex;
 		flex-direction: column;
@@ -249,6 +251,7 @@
 		margin-top: 30rpx;
 		font-size: 24rpx;
 		margin-left: 20rpx;
+		font-weight: bold;
 	}
 
 	.payMethodList {
@@ -326,6 +329,8 @@
 	.title {
 		text-align: center;
 		margin: 25rpx;
+		padding-bottom:30rpx;
+		border-bottom:2rpx dashed #cccccc;
 	}
 
 	.orderno {
@@ -348,7 +353,7 @@
 	}
 
 	.order-area {
-		border: 1rpx dashed #327ab7;
+		// border: 1rpx dashed #327ab7;
 		margin: 40rpx 40rpx;
 
 		.item {
@@ -409,6 +414,7 @@
 			color: #ffffff;
 			cursor: pointer;
 			margin-top: 50rpx;
+			font-size:40rpx;
 		}
 
 		.payAliBgColor {
@@ -418,6 +424,15 @@
 		.qrcodeBox {
 			padding-bottom: 80rpx;
 		}
-
+	}
+	.tipDesc{
+		margin-top: 30rpx;
+		font-size: 34rpx;
+		margin-left: 20rpx;
+		line-height: 56rpx;
+		color:#00a9f1;
+	}
+	.wxTitle{
+		font-size:40rpx;
 	}
 </style>
