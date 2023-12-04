@@ -30,9 +30,13 @@
 				</view>
 			</view> -->
 			<view class="tips wxTitle">支付步骤: </view>
-			<view class="tipDesc">点击立即支付 -> 打开小程序 ->选择要充值金额的任意商品下单 -> 完成支付 -> 自动充值成功!</view>
+			<view class="tipDesc"><i class="star">* </i> 点击立即取码 -> 长按图片进入小程序 ->选择要充值金额的任意商品下单 -> 完成支付 -> 自动充值成功!</view>
 			<view class="item payCodeBox" @tap="getPayCode">
-				立即支付
+				立即取码
+			</view>
+			<view class="miniCodeWrap">
+				<view class="longPress" v-if="url">长按图片进入小程序</view>
+				<image class="miniCodeImg" :src="url"></image>
 			</view>
 		</view>
 	</view>
@@ -43,6 +47,7 @@
 	export default {
 		data() {
 			return {
+				miniCodeUrl:"https://caiyifu-1319598303.cos.ap-nanjing.myqcloud.com/cyf202312041833094189.jpg",
 				orderNo: "", //订单号
 				userName: "", // 用户姓名
 				amount:1, // 用户支付金额
@@ -151,10 +156,16 @@
 								}
 							} else if (result.data.paymentType == 3) {
 								// 微信小程序支付
-								let url = result.data.url_link;
+								// 1. 直接拉起支付 begin
+								// let url = result.data.url_link;
+								// this.url = url;
+								// // this.getQrcodeImg(url);
+								// this.generateCode(url);
+								// 1. 直接拉起支付 end
+								// 2. 展示微信小程序二维码 begin
+								let url = result.data.data;
 								this.url = url;
-								// this.getQrcodeImg(url);
-								this.generateCode(url);
+								// 2. 展示微信小程序二维码 end
 							}
 						} else {
 							uni.showToast({
@@ -231,7 +242,27 @@
 </script>
 
 <style lang="scss" scoped>
+	.star{
+		color:#ff0000;
+		display: inline-block;
+		margin-right:10rpx;
+	}
 	
+	.longPress{
+		margin-bottom:40rpx;
+		color:#ff0000;
+	}
+	.miniCodeWrap{
+		margin-top:80rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	.miniCodeImg{
+		width:500rpx;
+		height:500rpx;
+	}
 	.notice {
 		display: flex;
 		flex-direction: column;
