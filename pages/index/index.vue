@@ -88,8 +88,8 @@
 				payMethod:"wxpay", // 支付方式发wxpay alipay
 				url:"",// 支付链接
 				selectedType:"wxpay",
-				appid:"td84pzdfbakevsr",
-				appsecret:"c439b1ca1269f0c904790d7e4210e09d",
+				appid:"",
+				appsecret:"",
 			}
 		},
 		onLoad() {
@@ -98,7 +98,11 @@
 			if (token){
 				this.token = token;
 			}else {
-				this.getToken(this.appid,this.appsecret);
+				// 获取query对象
+				const query = this.$route.query;
+				const appid = query.appid;
+				const appsecret = query.appsecret;
+				this.getToken(appid,appsecret);
 			}
 		},
 		methods: {
