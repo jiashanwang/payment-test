@@ -72,8 +72,8 @@
 			},
 			getToken(appid,appsecret){
 				uni.request({
-					url: 'https://www.atwillpay.cn/paymentcmj/common/getToken',
-					// url: 'http://127.0.0.1:4001/paymentzpw/common/getToken',
+					// url: 'https://www.atwillpay.cn/paymentcmj/common/getToken',
+					url: 'http://127.0.0.1:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
