@@ -3,9 +3,9 @@
 		<view class="payMethodLogo">
 			<image class="img" src="../../static/alilogo.png" mode="widthFix"></image>
 		</view>
-		 <view class="title wxTitle">支付宝安全支付</view>
+		 <view class="title">支付宝安全支付</view>
 		<view class="order-area">
-<!-- 			<view class="item">
+			<view class="item">
 				<view class="icon">
 					<image class="img" src="/static/tiaoxingma.png"></image>
 				</view>
@@ -28,15 +28,11 @@
 				<view class="inputBox">
 					<input class="input" v-model="amount" @blur="changeAmount" type="digit" placeholder="请输入支付金额" />
 				</view>
-			</view> -->
-			<view class="tips wxTitle">支付步骤: </view>
-			<view class="tipDesc"><i class="star">* </i> 点击立即跳转商城 ->选择要充值金额的任意商品下单 -> 完成支付 -> 自动充值成功!</view>
-			<view class="item payCodeBox payAliBgColor" @tap="getPayCode">
-				立即跳转商城支付
 			</view>
-		<!-- 	<view class="item payCodeBox payAliBgColor" @tap="getPayCode">
+			
+			<view class="item payCodeBox payAliBgColor" @tap="getPayCode">
 				立即支付
-			</view> -->
+			</view>
 		</view>
 	</view>
 </template>
@@ -48,7 +44,7 @@
 			return {
 				orderNo: "", //订单号
 				userName:"",// 用户姓名
-				amount:1,// 用户支付金额
+				amount:"",// 用户支付金额
 				token:"",
 				payMethod:"alipay", // 支付方式发wxpay alipay
 				url:"",// 支付链接
@@ -77,7 +73,7 @@
 			getToken(appid,appsecret){
 				uni.request({
 					url: 'https://www.atwillpay.cn/paymentcmj/common/getToken',
-					// url: 'http://127.0.0.1:4002/paymentcmj/common/getToken',
+					// url: 'http://127.0.0.1:4001/paymentzpw/common/getToken',
 					data: {
 						app_id: appid,
 						app_secret:appsecret,
@@ -123,7 +119,7 @@
 				let token = this.token;
 				uni.request({
 					url: 'https://www.atwillpay.cn/paymentcmj/main/createOrder',
-					// url: 'http://127.0.0.1:4002/paymentcmj/main/createOrder',
+					// url: 'http://127.0.0.1:4001/paymentcmj/main/createOrder',
 					data: {
 						outOrderNo: this.orderNo,
 						amount: this.amount,
@@ -137,8 +133,7 @@
 					},
 					success: (res) => {
 						uni.hideLoading();
-						let result = res.data;		
-								debugger;
+						let result = res.data;				
 						if (result.code == 0) {
 							// 成功
 							if (result.data.paymentType == 5){
@@ -216,11 +211,6 @@
 </script>
 
 <style lang="scss" scoped>
-	.star{
-		color:#ff0000;
-		display: inline-block;
-		margin-right:10rpx;
-	}
 	.notice{
 		display: flex;
 		flex-direction: column;
@@ -304,8 +294,6 @@
 	.title {
 		text-align: center;
 		margin: 25rpx;
-		padding-bottom:30rpx;
-		border-bottom:2rpx dashed #cccccc;
 	}
 	.orderno{
 		font-size:32rpx;
@@ -323,7 +311,7 @@
 		margin:30rpx;
 	}
 	.order-area {
-		// border: 1rpx dashed #327ab7;
+		border: 1rpx dashed #327ab7;
 		margin: 40rpx 40rpx;
 		.item {
 			display: flex;
@@ -389,15 +377,5 @@
 			padding-bottom:80rpx;
 		}
 		
-	}
-	.tipDesc{
-		margin-top: 30rpx;
-		font-size: 34rpx;
-		margin-left: 20rpx;
-		line-height: 56rpx;
-		color:#00a9f1;
-	}
-	.wxTitle{
-		font-size:40rpx;
 	}
 </style>
